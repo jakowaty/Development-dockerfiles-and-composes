@@ -1,17 +1,10 @@
-FROM alpine:latest
+FROM debian:latest
 
-RUN apk add --no-cache ca-certificates openssl
-
-RUN apk add --no-cache ruby ruby-bigdecimal ruby-json sqlite-libs libstdc++
-
-RUN apk add --no-cache --virtual .build-deps \
-        ruby-dev \
-        make g++ \
-        sqlite-dev \
-        && \
-    gem install mailcatcher --no-ri --no-rdoc && \
-    apk del .build-deps
+RUN apt-get -y update && apt-get upgrade && \
+apt-get -y install ca-certificates openssl ruby sqlite libstdc++ ruby-dev make ruby-json libsqlite3-dev g++ && \
+gem install mailcatcher --no-ri --no-rdoc
 
 EXPOSE 1025 1080
 
 CMD ["mailcatcher", "--foreground", "--ip=0.0.0.0"]
+
