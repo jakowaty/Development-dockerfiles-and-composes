@@ -1,6 +1,6 @@
 FROM debian:latest
 
-RUN apt-get -y update && apt-get upgrade && \
+RUN apt-get -y update && apt-get -y upgrade && \
 apt-get -y install ca-certificates openssl ruby sqlite libstdc++ ruby-dev make ruby-json libsqlite3-dev g++ && \
 gem install mailcatcher --no-ri --no-rdoc
 
