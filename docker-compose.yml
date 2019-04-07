@@ -14,7 +14,7 @@ services:
         volumes:
           - ./.data-mysql:/var/lib/mysql
 
-# APACHE2 on debian
+
     server:
         build: ./docker/apache-php
         ports:
@@ -30,21 +30,3 @@ services:
             - "127.0.0.1:1025:1025"
             - "127.0.0.1:1080:1080"
         tty: true
-
-# NGINX AND PHP FPM
-#    server:
-#        image: nginx:1.13
-#        ports:
-#            - "8080:80"
-#        volumes:
-#            - ./:/application
-#            - ./docker/site.conf:/etc/nginx/conf.d/site.conf
-#        links:
-#          - php-fpm
-#
-#    php-fpm:
-#        build: ./docker/
-#        volumes:
-#          - ./:/application
-#        environment:
-#            - PHP_IDE_CONFIG="serverName=localhost"
