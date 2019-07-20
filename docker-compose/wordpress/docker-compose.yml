@@ -1,0 +1,52 @@
+version: '3'
+services:
+
+    mysql:
+        image: mysql:5.7
+#        restart: always
+        ports:
+            - "127.0.0.1:3310:3306"
+        environment:
+          - MYSQL_ROOT_PASSWORD=root
+          - MYSQL_DATABASE=db1
+          - MYSQL_USER=user1
+          - MYSQL_PASSWORD=password1
+        volumes:
+          - ./.data-mysql:/var/lib/mysql
+
+# APACHE2 on debian
+    server:
+        build: ./docker/apache-php
+        ports:
+            - "127.0.0.1:20000:80"
+        volumes:
+            - ./:/var/www/html
+        environment:
+            - PHP_IDE_CONFIG="serverName=localhost"
+
+    mailer:
+        build: ./docker/mailcatcher
+        ports:
+            - "127.0.0.1:1025:1025"
+            - "127.0.0.1:1080:1080"
+        tty: true
+
+
+
+# NGINX AND PHP FPM
+#    server:
+#        image: nginx:1.13
+#        ports:
+#            - "8080:80"
+#        volumes:
+#            - ./:/application
+#            - ./docker/site.conf:/etc/nginx/conf.d/site.conf
+#        links:
+#          - php-fpm
+#
+#    php-fpm:
+#        build: ./docker/
+#        volumes:
+#          - ./:/application
+#        environment:
+#            - PHP_IDE_CONFIG="serverName=localhost"

@@ -1,0 +1,4 @@
+FROM elasticsearch:6.5.0
+
+EXPOSE 9200
+EXPOSE 9300
